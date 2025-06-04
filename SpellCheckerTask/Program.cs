@@ -11,21 +11,74 @@ namespace SpellCheckerTask
         static void Main(string[] args)
         {
             string[] words = createDictionary();
-            //1. Take a user input of a word an check if it has been spelled correctly
+          namespace SpellCheckerTask
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string[] dictionary = File.ReadAllLines("WordsFile.txt");
+            Console.WriteLine("Type a word:");
+            string inputWord = Console.ReadLine().ToLower().Trim();
 
-            //2. Take a string of words as a user input and check they have all been spelled correctly
+            if (IsWordCorrect(inputWord, dictionary))
+            {
+                Console.WriteLine("That word is spelled correctly!");
+            }
+            else
+            {
+                Console.WriteLine("That word is NOT spelled correctly.");
+            }
 
-            //3.Create a spelling score based on the percentage of words spelled correctly
+            Console.WriteLine("Type a sentence:");
+            string sentence = Console.ReadLine().ToLower();
 
-            //4.Create a new list of words that have been spelled incorrectly and save it in a new file
+            string[] words = sentence.Split(' ', '.', ',', '!', '?');
 
-            //Challenge - Hard task
+            int correctCount = 0;
+            int totalWords = 0;
 
-            //Try to work out which words the user is trying to spell by looking for similarities in
-            //the spelling and ask the user did they mean that.
+            foreach (string word in words)
+            {
+                if (word.Trim() == "")
+                    continue;
 
-            //Add these suggested words to a spelling list that the user can save as a file to work on
-            //their own spelling
+                totalWords++;
+
+                if (IsWordCorrect(word.Trim(), dictionary))
+                {
+                    correctCount++;
+                }
+                else
+                {
+                    Console.WriteLine($"Incorrect word: {word}");
+                }
+            }
+            if (totalWords > 0)
+            {
+                double score = (double)correctCount / totalWords * 100;
+                Console.WriteLine($"Spelling score: {score:0.##}%");
+            }
+            else
+            {
+                Console.WriteLine("No words to check.");
+            }
+        }
+
+        static bool IsWordCorrect(string word, string[] dictionary)
+        {
+            foreach (string dictWord in dictionary)
+            {
+                if (dictWord.ToLower() == word)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+    }
+}
+
 
 
 
